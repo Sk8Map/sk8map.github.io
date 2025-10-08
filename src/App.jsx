@@ -32,7 +32,7 @@ function App() {
           <a href="#"  title="Who we are" onClick={handleInfoClick}><img src="/Info.svg" alt="" className='navBtn logo
           '/></a>
           <a href="https://forms.gle/GQCMf3mvRB2oHGa18" target="_blank" title="Submit your skatepark/spot"><img src="/submitSkate.svg" alt="submit spot" className='logo navBtn'/></a>
-          <a title="Donate!" onClick={handleDonateClick}><img src="/donate.svg" alt="donate" className='logo donate navBtn'/></a>
+          {/* <a title="Donate!" onClick={handleDonateClick}><img src="/donate.svg" alt="donate" className='logo donate navBtn'/></a> */}
         </nav>
       </header>
       <main className="content">
@@ -46,7 +46,7 @@ function App() {
             <div className="spot-panel-body">
               <p className="spot-subtitle">{selectedSpot.skatepark ? 'Skatepark' : 'Spot'}</p>
               {selectedSpot.userSubmited ? (
-                <p className="spot-submitter">Submitted by {selectedSpot.userSubmited}</p>
+                <p className="spot-submitter">Submitted by <b>{selectedSpot.userSubmited}</b></p>
               ) : null}
               {Array.isArray(selectedSpot.modules) && selectedSpot.modules.length > 0 ? (
                 <div className="spot-modules">
