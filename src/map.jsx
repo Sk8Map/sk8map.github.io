@@ -63,7 +63,14 @@ const db = getFirestore(app);
             const lat = typeof data.lat === 'number' ? data.lat : parseFloat(data.lat)
             const lng = typeof data.lng === 'number' ? data.lng : parseFloat(data.lng)
             if (Number.isFinite(lat) && Number.isFinite(lng)) {
-              const marker = L.marker([lat, lng]).addTo(markersRef.current)
+              const isSkatepark = !!data.skatepark
+              const icon = L.icon({
+                iconUrl: isSkatepark ? '/skateparkMark.svg' : '/spotMark.svg',
+                iconSize: [56, 56],
+                iconAnchor: [28, 56],
+                className: isSkatepark ? 'icon-skatepark' : 'icon-spot'
+              })
+              const marker = L.marker([lat, lng], { icon, title: data.name || '' }).addTo(markersRef.current)
               marker.on('click', () => {
                 if (typeof onSpotClick === 'function') {
                   onSpotClick({
@@ -71,6 +78,7 @@ const db = getFirestore(app);
                     modules: Array.isArray(data.modules) ? data.modules : [],
                     skatepark: !!data.skatepark,
                     userSubmited: typeof data.userSubmited === 'string' ? data.userSubmited : '',
+                    mapsUrl: typeof data.mapsUrl === 'string' ? data.mapsUrl : '',
                     lat,
                     lng
                   })

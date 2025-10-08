@@ -151,6 +151,19 @@
   max-width: calc(100% - 32px);
   padding: 12px 12px 10px;
   z-index: 1500;
+  animation: spotPanelIn 200ms ease-out;
+  will-change: transform, opacity;
+}
+
+@keyframes spotPanelIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .spot-panel-header {
@@ -193,4 +206,23 @@
   border-radius: 999px;
   padding: 4px 8px;
   font-size: 12px;
+}
+
+.spot-actions {
+  margin-top: 12px;
+}
+
+.get-there-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #000000;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.get-there-btn:hover {
+  background: #0059c8;
 }
