@@ -14,3 +14,25 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Firestore Integration
+
+This app can load map spots from a Firebase Firestore collection named `spots`.
+
+- Install Firebase: `npm install firebase`
+- Configure Firebase in code (currently in `src/map.jsx`) or via env vars using `src/firebase.js`.
+- Recommended env variables (create `.env.local`):
+  - `VITE_FIREBASE_API_KEY`
+  - `VITE_FIREBASE_AUTH_DOMAIN`
+  - `VITE_FIREBASE_PROJECT_ID`
+  - `VITE_FIREBASE_STORAGE_BUCKET`
+  - `VITE_FIREBASE_MESSAGING_SENDER_ID`
+  - `VITE_FIREBASE_APP_ID`
+
+Each document in `spots` should have at least:
+
+- `lat`: number
+- `lng`: number
+- `name`: string (optional)
+
+The map listens for live updates and renders markers automatically.

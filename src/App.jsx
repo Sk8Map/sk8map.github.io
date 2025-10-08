@@ -1,10 +1,11 @@
 import './App.css'
 import Map from './map.jsx'
-import { MapStyle } from '@maptiler/leaflet-maptilersdk'
 import { useState } from 'react'
+
 
 function App() {
   const [donateOpen, setDonateOpen] = useState(false)
+  const [selectedSpot, setSelectedSpot] = useState(null)
 
   const handleDonateClick = (e) => {
     e.preventDefault()
@@ -12,19 +13,47 @@ function App() {
   }
 
   const closeDonate = () => setDonateOpen(false)
+  const closeSpotPanel = () => setSelectedSpot(null)
+  const handleSpotClick = (spot) => {
+    setSelectedSpot(spot)
+  }
 
   return (
     <div className="layout">
       <header className="sidebar">
-        <img src="/skateIcon.svg" alt="Sk8Map logo" className="logo" />
+        <img src="/skateIcon.svg" alt="Sk8Map logo" className="bigLogo" />
         <nav className="navBar">
-          <a href="#" title="Who we are">W</a>
-          <a href="#" title="Submit your skatepark/spot">S</a>
-          <a href="#" title="Donate!" onClick={handleDonateClick}>D</a>
+          <a href="#"  title="Who we are"><img src="/Info.svg" alt="" className='navBtn logo
+          '/></a>
+          <a href="#" title="Submit your skatepark/spot"><img src="/submitSkate.svg" alt="submit spot" className='logo navBtn'/></a>
+          <a title="Donate!" onClick={handleDonateClick}><img src="/donate.svg" alt="donate" className='logo donate navBtn'/></a>
         </nav>
       </header>
       <main className="content">
-        <Map />
+        <Map onSpotClick={handleSpotClick} />
+        {selectedSpot && (
+          <div className="spot-panel" role="dialog" aria-modal="false" aria-labelledby="spot-title">
+            <div className="spot-panel-header">
+              <h2 id="spot-title">{selectedSpot.name || 'Unnamed spot'}</h2>
+              <button className="close-btn" aria-label="Close" onClick={closeSpotPanel}>×</button>
+            </div>
+            <div className="spot-panel-body">
+              <p className="spot-subtitle">{selectedSpot.skatepark ? 'Skatepark' : 'Spot'}</p>
+              {selectedSpot.userSubmited ? (
+                <p className="spot-submitter">Submitted by {selectedSpot.userSubmited}</p>
+              ) : null}
+              {Array.isArray(selectedSpot.modules) && selectedSpot.modules.length > 0 ? (
+                <div className="spot-modules">
+                  {selectedSpot.modules.map((m, i) => (
+                    <span className="spot-tag" key={i}>{m}</span>
+                  ))}
+                </div>
+              ) : (
+                <p>No modules listed.</p>
+              )}
+            </div>
+          </div>
+        )}
       </main>
 
       {donateOpen && (
